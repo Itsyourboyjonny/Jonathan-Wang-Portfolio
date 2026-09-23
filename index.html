@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jonathan Wang</title>
+<meta name="description" content="Jonathan Wang: technology consultant, builder and creator. Magic, content creation and projects.">
+<meta property="og:title" content="Jonathan Wang">
+<meta property="og:description" content="Technology Consultant · Builder · Creator">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1CC7A8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #EDF1F0;
+    --surface: #FFFFFF;
+    --ink: #2B3134;
+    --slate: #52585E;
+    --muted: #6F787D;
+    --line: #D9E0DE;
+    --teal: #1CC7A8;
+    --teal-ink: #0B8C75;
+    --mint: #B1E3DD;
+    --mint-soft: #DDF2EE;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #111615;
+      --surface: #182020;
+      --ink: #E7EDEB;
+      --slate: #C3CCC9;
+      --muted: #8E9A97;
+      --line: #26302F;
+      --teal: #2BD6B6;
+      --teal-ink: #4FE0C4;
+      --mint: #1F4A43;
+      --mint-soft: #16302C;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #111615;
+    --surface: #182020;
+    --ink: #E7EDEB;
+    --slate: #C3CCC9;
+    --muted: #8E9A97;
+    --line: #26302F;
+    --teal: #2BD6B6;
+    --teal-ink: #4FE0C4;
+    --mint: #1F4A43;
+    --mint-soft: #16302C;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--ground);
+    color: var(--slate);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    padding-inline: 20px;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  /* Top bar */
+  .bar {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+    background: color-mix(in srgb, var(--ground) 86%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    margin-inline: -20px; padding-inline: 20px;
+    border-bottom: 1px solid transparent;
+  }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+  .bar .mark { font-weight: 600; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; font-size: 17px; }
+  .bar .mark span { color: var(--teal-ink); }
+  .bar nav { display: flex; gap: 22px; font-size: 14px; }
+  .bar nav a { text-decoration: none; color: var(--muted); }
+  .bar nav a:hover { color: var(--ink); }
+  @media (max-width: 520px) { .bar nav a.opt { display: none; } .bar nav { gap: 16px; } }
+
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; padding-block: 72px 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal-ink); margin: 0 0 18px; }
+  h1 {
+    font-size: clamp(44px, 8vw, 68px); line-height: 1; letter-spacing: -0.055em; font-weight: 600;
+    color: var(--ink); margin: 0 0 24px; text-wrap: balance;
+  }
+  .lede { font-size: 18px; max-width: 34em; margin: 0 0 30px; color: var(--slate); }
+  .lede em { font-style: normal; color: var(--ink); font-weight: 500; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 40px; padding-inline: 16px;
+    border-radius: 999px; font-size: 14px; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    transition: border-color .15s, background .15s;
+  }
+  .btn:hover { border-color: var(--teal); }
+  .btn.primary { background: var(--mint); border-color: var(--mint); color: var(--ink); }
+  .btn.primary:hover { border-color: var(--teal); }
+  .btn svg { width: 16px; height: 16px; flex: none; }
+
+  /* Playing-card monogram */
+  .card {
+    width: 150px; aspect-ratio: 5 / 7; border-radius: 12px; background: var(--surface);
+    border: 1px solid var(--line); position: relative; margin-top: 8px;
+    box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(20, 60, 55, .35);
+    transform: rotate(3deg); transition: transform .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .card:hover { transform: rotate(-2deg) translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .card, .card:hover { transition: none; transform: rotate(3deg); } }
+  img.card { display: block; object-fit: cover; height: auto; }
+  .card .corner { position: absolute; font-weight: 700; color: var(--teal-ink); line-height: 1; font-size: 18px; letter-spacing: -0.04em; text-align: center; }
+  .card .corner small { display: block; font-size: 16px; margin-top: 2px; }
+  .card .tl { top: 12px; left: 12px; }
+  .card .br { bottom: 12px; right: 12px; transform: rotate(180deg); }
+  .card .pip { position: absolute; inset: 0; display: grid; place-items: center; font-size: 52px; color: var(--teal); }
+  @media (max-width: 620px) {
+    .hero { grid-template-columns: 1fr; padding-block: 48px 40px; gap: 0; }
+    .card { display: none; }
+  }
+
+  /* Sections */
+  section.block { padding-block: 56px; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  h2 { font-size: 34px; letter-spacing: -0.045em; line-height: 1.1; font-weight: 600; color: var(--ink); margin: 0; }
+  .tag { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  h3 { font-size: 20px; letter-spacing: -0.025em; font-weight: 600; color: var(--ink); margin: 0 0 8px; }
+  p { margin: 0 0 16px; max-width: 62ch; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 28px 0 32px; }
+  .stats.two { grid-template-columns: repeat(2, 1fr); }
+  .stat { background: var(--surface); padding: 20px 20px 18px; }
+  .stat b { display: block; font-size: 30px; font-weight: 600; letter-spacing: -0.045em; color: var(--ink); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 13.5px; color: var(--muted); line-height: 1.4; display: block; margin-top: 6px; }
+  @media (max-width: 560px) { .stats { grid-template-columns: 1fr; } .stats.two { grid-template-columns: 1fr 1fr; } }
+
+  /* Performance log */
+  .log-title { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .log { list-style: none; margin: 0; padding: 0; }
+  .log li { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: baseline; padding-block: 14px; border-bottom: 1px solid var(--line); }
+  .log li:first-child { border-top: 1px solid var(--line); }
+  .log .yr { font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .log .ev { color: var(--ink); font-weight: 500; }
+  .log .ev small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
+  .log .out { font-size: 14px; color: var(--teal-ink); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media (max-width: 520px) {
+    .log li { grid-template-columns: 48px 1fr; }
+    .log .out { grid-column: 2; text-align: left; white-space: normal; }
+  }
+
+  /* Projects */
+  .projects { display: grid; gap: 16px; }
+  .project { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px 26px 22px; }
+  .project .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
+  .chip { font-family: var(--mono); font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--mint-soft); color: var(--teal-ink); }
+  .project p:last-of-type { margin-bottom: 0; }
+  .project .foot { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 14px; }
+  .project .foot a { color: var(--teal-ink); font-weight: 500; text-decoration: none; }
+  .project .foot a:hover { text-decoration: underline; }
+
+  /* Contact */
+  .contact { padding-block: 64px 40px; border-top: 1px solid var(--line); }
+  .contact h2 { font-size: clamp(32px, 6vw, 44px); margin-bottom: 14px; text-wrap: balance; }
+  .email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 20px; }
+  .email {
+    font-family: var(--mono); font-size: 15px; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 10px; padding: 9px 14px; user-select: all; overflow-wrap: anywhere;
+  }
+  button.btn { cursor: pointer; font-family: inherit; }
+  footer { padding-block: 28px 48px; font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top">Jonathan Wang<span>.</span></a>
+    <nav aria-label="Sections">
+      <a href="#magic">Magic</a>
+      <a href="#content" class="opt">Content</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Technology Consultant · Builder · Creator</p>
+      <h1>Jonathan Wang</h1>
+      <p class="lede">Eight years ago I picked up a deck of cards. Magic taught me the fundamentals of <em>problem solving, building, and communicating</em>. Now I bring those same principles to my career: meeting brilliant people, learning new technology, and building solutions for emerging problems.</p>
+      <div class="links">
+        <a class="btn primary" href="#projects">See my work</a>
+        <a class="btn" href="https://www.linkedin.com/in/jonathan-wang-54a741205/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3v-11zm6.5 0h3.8v1.5h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4v-11z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn" href="https://www.instagram.com/jonnywangmagic/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+    <div class="card" aria-hidden="true">
+      <div class="corner tl">JW<small>♠</small></div>
+      <div class="pip">♠</div>
+      <div class="corner br">JW<small>♠</small></div>
+    </div>
+  </section>
+
+  <section class="block" id="magic">
+    <div class="sec-head">
+      <h2>Magic</h2>
+      <span class="tag">Jonny Wang Magic · est. 2022</span>
+    </div>
+    <p>Jonny Wang Magic is a personal business I founded to bring entertainment to parties, concerts, and events. I also perform street magic on Instagram as a way to meet new people. It's the same skill set as consulting: read the room, earn trust fast, and deliver a moment people remember.</p>
+
+    <div class="stats">
+      <div class="stat"><b>100K+</b><span>Instagram views in the first 60 days</span></div>
+      <div class="stat"><b>20K+</b><span>views on the top video</span></div>
+      <div class="stat"><b>$170K+</b><span>raised across two Relay4Life events</span></div>
+    </div>
+
+    <p class="log-title">Notable performances</p>
+    <ul class="log">
+      <li><span class="yr">2026</span><span class="ev">Ernst &amp; Young<small>Client workshop, pro-bono engagement</small></span><span class="out">Corporate</span></li>
+      <li><span class="yr">2026</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$70,000+ raised</span></li>
+      <li><span class="yr">2026</span><span class="ev">Western Japan Festival</span><span class="out">200+ attendees</span></li>
+      <li><span class="yr">2026</span><span class="ev">Anime Maid Cafe<small>Exclusive event</small></span><span class="out">~80 attendees</span></li>
+      <li><span class="yr">2025</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$100,000+ raised</span></li>
+    </ul>
+  </section>
+
+  <section class="block" id="content">
+    <div class="sec-head">
+      <h2>Content creation</h2>
+      <span class="tag">UGC · Hyperknow.io</span>
+    </div>
+    <p>I created user-generated content for a campaign with Hyperknow.io, turning a product into short-form videos people actually watched.</p>
+    <div class="stats two">
+      <div class="stat"><b>100K+</b><span>total views over the campaign</span></div>
+      <div class="stat"><b>10K+</b><span>views on the top video</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="sec-head">
+      <h2>Projects</h2>
+      <span class="tag">Things I've built</span>
+    </div>
+    <div class="projects">
+      <article class="project">
+        <h3>Protag-A-Me</h3>
+        <div class="meta"><span class="chip">AI</span><span class="chip">Web app</span><span class="chip">Wellbeing</span></div>
+        <p>An AI journal that rewrites your daily entries as fantasy stories. The idea: every day can be an adventure in its own way, and seeing it that way makes reflection feel lighter and more positive.</p>
+        <div class="foot"><a href="https://protagame.vercel.app" target="_blank" rel="noopener">protagame.vercel.app ↗</a></div>
+      </article>
+      <article class="project">
+        <h3>AmberShield Fire Grid</h3>
+        <div class="meta"><span class="chip">RBC Design Thinking</span><span class="chip">Geospatial</span><span class="chip">Team of 4</span></div>
+        <p>Reactive firefighting software for Canadian forest fires. It combines satellite imagery (NASA FIRMS hotspots, CWFIS/NRCan) with real-time data to recommend where to dispatch crews and how to contain a fire.</p>
+        <p>Built through the RBC Design Thinking Program: we defined the problem, mapped the customer journey, ran customer interviews, and pitched to RBCx.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <p class="eyebrow">Contact</p>
+    <h2>Let's build something.</h2>
+    <p>Open to conversations about consulting, tech, and projects — or booking a magic set for your next event.</p>
+    <div class="email-row">
+      <span class="email" id="email">jonathanwang.hba2027@ivey.ca</span>
+      <button class="btn" type="button" id="copy">Copy email</button>
+    </div>
+    <div class="links">
+      <a class="btn" href="https://www.linkedin.com/in/jonathan-wang-54a741205/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn" href="https://www.instagram.com/jonnywangmagic/" target="_blank" rel="noopener">@jonnywangmagic ↗</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Jonathan Wang</span>
+    <span>Consultant · Builder · Creator ♠</span>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById('copy');
+    var email = document.getElementById('email');
+    btn.addEventListener('click', function () {
+      var text = email.textContent.trim();
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); };
+      var fallback = function () {
+        var r = document.createRange(); r.selectNodeContents(email);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = 'Selected — press copy';
+      };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fallback);
+        } else { fallback(); }
+      } catch (e) { fallback(); }
+    });
+  })();
+</script>
+
+</body>
+</html>
