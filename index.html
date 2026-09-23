@@ -8,6 +8,7 @@
 <meta property="og:title" content="Jonathan Wang">
 <meta property="og:description" content="Technology Consultant · Builder · Creator">
 <meta property="og:type" content="website">
+<meta property="og:image" content="images/headshot.jpg">
 <meta name="theme-color" content="#1CC7A8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,119 +26,169 @@
     --teal-ink: #0B8C75;
     --mint: #B1E3DD;
     --mint-soft: #DDF2EE;
+    --glow: rgba(28, 199, 168, .20);
+    --shadow: rgba(20, 60, 55, .28);
     --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --ground: #111615;
-      --surface: #182020;
-      --ink: #E7EDEB;
-      --slate: #C3CCC9;
-      --muted: #8E9A97;
-      --line: #26302F;
-      --teal: #2BD6B6;
-      --teal-ink: #4FE0C4;
-      --mint: #1F4A43;
-      --mint-soft: #16302C;
+      --ground: #111615; --surface: #1A2322; --ink: #E7EDEB; --slate: #C3CCC9; --muted: #8E9A97;
+      --line: #28332F; --teal: #2BD6B6; --teal-ink: #4FE0C4; --mint: #1F4A43; --mint-soft: #16302C;
+      --glow: rgba(43, 214, 182, .14); --shadow: rgba(0, 0, 0, .55);
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --ground: #111615;
-    --surface: #182020;
-    --ink: #E7EDEB;
-    --slate: #C3CCC9;
-    --muted: #8E9A97;
-    --line: #26302F;
-    --teal: #2BD6B6;
-    --teal-ink: #4FE0C4;
-    --mint: #1F4A43;
-    --mint-soft: #16302C;
+    --ground: #111615; --surface: #1A2322; --ink: #E7EDEB; --slate: #C3CCC9; --muted: #8E9A97;
+    --line: #28332F; --teal: #2BD6B6; --teal-ink: #4FE0C4; --mint: #1F4A43; --mint-soft: #16302C;
+    --glow: rgba(43, 214, 182, .14); --shadow: rgba(0, 0, 0, .55);
   }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  html, body { overflow-x: clip; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
-    background: var(--ground);
-    color: var(--slate);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    padding-inline: 20px;
+    background: var(--ground); color: var(--slate); font-family: var(--sans);
+    font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding-inline: 20px; position: relative; }
 
-  .wrap { max-width: 760px; margin: 0 auto; }
-
-  /* Top bar */
+  /* ---------- Top bar ---------- */
   .bar {
-    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
-    background: color-mix(in srgb, var(--ground) 86%, transparent);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    margin-inline: -20px; padding-inline: 20px;
-    border-bottom: 1px solid transparent;
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: color-mix(in srgb, var(--ground) 82%, transparent);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   }
-  .bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
-  .bar .mark { font-weight: 600; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; font-size: 17px; }
+  .bar .wrap { max-width: 1040px; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+  .bar .mark { white-space: nowrap; font-weight: 600; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; font-size: 17px; }
   .bar .mark span { color: var(--teal-ink); }
   .bar nav { display: flex; gap: 22px; font-size: 14px; }
   .bar nav a { text-decoration: none; color: var(--muted); }
   .bar nav a:hover { color: var(--ink); }
   @media (max-width: 520px) { .bar nav a.opt { display: none; } .bar nav { gap: 16px; } }
 
-  /* Hero */
-  .hero { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; padding-block: 72px 56px; }
-  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal-ink); margin: 0 0 18px; }
-  h1 {
-    font-size: clamp(44px, 8vw, 68px); line-height: 1; letter-spacing: -0.055em; font-weight: 600;
-    color: var(--ink); margin: 0 0 24px; text-wrap: balance;
+  /* ---------- Playing cards (decor) ---------- */
+  .pc {
+    --w: 88px;
+    width: var(--w); aspect-ratio: 5 / 7; border-radius: calc(var(--w) * .1);
+    background: var(--surface); border: 1px solid var(--line);
+    box-shadow: 0 2px 0 var(--line), 0 22px 40px -22px var(--shadow);
+    position: relative; display: grid; place-items: center;
+    font-size: calc(var(--w) * .42); line-height: 1; color: var(--ink); font-family: var(--sans);
   }
-  .lede { font-size: 18px; max-width: 34em; margin: 0 0 30px; color: var(--slate); }
+  .pc.red { color: var(--teal); }
+  .pc::before, .pc::after {
+    content: attr(data-r) "\A" attr(data-s); white-space: pre; position: absolute;
+    font-size: calc(var(--w) * .15); font-weight: 700; line-height: 1.05; text-align: center; letter-spacing: -0.03em;
+  }
+  .pc::before { top: 8%; left: 9%; }
+  .pc::after { bottom: 8%; right: 9%; transform: rotate(180deg); }
+  .pc.back {
+    background:
+      repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in srgb, var(--teal) 30%, transparent) 6px 7px),
+      repeating-linear-gradient(-45deg, transparent 0 6px, color-mix(in srgb, var(--teal) 30%, transparent) 6px 7px),
+      var(--mint-soft);
+    outline: 5px solid var(--surface); outline-offset: -6px;
+  }
+  .pc.back::before, .pc.back::after { content: none; }
+  .chipicon {
+    width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--surface); border: 1px solid var(--line); color: var(--teal-ink);
+    box-shadow: 0 16px 30px -18px var(--shadow);
+  }
+  .chipicon svg { width: 22px; height: 22px; }
+
+  .fl { position: absolute; z-index: 0; pointer-events: none; will-change: transform; }
+  .fl > * { animation: deal 1.1s cubic-bezier(.2, .8, .2, 1) both; animation-delay: var(--d, 0s); }
+  @keyframes deal {
+    from { transform: translate(var(--fx, 0px), 60px) rotate(var(--fr, 0deg)) scale(.7); }
+    to { transform: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero-wrap { position: relative; isolation: isolate; overflow: hidden; }
+  .hero-wrap::before {
+    content: ""; position: absolute; inset: -60px 0 0; z-index: -1;
+    background: radial-gradient(60% 55% at 30% 45%, var(--glow), transparent 70%);
+  }
+  .hero {
+    max-width: 960px; display: grid; grid-template-columns: minmax(240px, 330px) 1fr; gap: 64px;
+    align-items: center; padding-block: 88px 104px; z-index: 1;
+  }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal-ink); margin: 0 0 16px; }
+  h1 { font-size: clamp(44px, 7vw, 68px); line-height: 1; letter-spacing: -0.055em; font-weight: 600; color: var(--ink); margin: 0 0 22px; text-wrap: balance; }
+  .lede { font-size: 17.5px; max-width: 32em; margin: 0 0 28px; color: var(--slate); }
   .lede em { font-style: normal; color: var(--ink); font-weight: 500; }
   .links { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px; height: 40px; padding-inline: 16px;
     border-radius: 999px; font-size: 14px; font-weight: 500; text-decoration: none;
     border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-    transition: border-color .15s, background .15s;
+    transition: border-color .15s, transform .15s;
   }
-  .btn:hover { border-color: var(--teal); }
-  .btn.primary { background: var(--mint); border-color: var(--mint); color: var(--ink); }
-  .btn.primary:hover { border-color: var(--teal); }
+  .btn:hover { border-color: var(--teal); transform: translateY(-1px); }
+  .btn.primary { background: var(--mint); border-color: var(--mint); }
   .btn svg { width: 16px; height: 16px; flex: none; }
+  button.btn { cursor: pointer; font-family: inherit; }
 
-  /* Playing-card monogram */
-  .card {
-    width: 150px; aspect-ratio: 5 / 7; border-radius: 12px; background: var(--surface);
-    border: 1px solid var(--line); position: relative; margin-top: 8px;
-    box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(20, 60, 55, .35);
-    transform: rotate(3deg); transition: transform .4s cubic-bezier(.2,.7,.2,1);
+  /* Portrait: a fanned hand of cards, photo on top */
+  .stack { position: relative; width: 100%; max-width: 330px; perspective: 1000px; }
+  .stack .fan { position: absolute; inset: 6% 8%; z-index: 0; }
+  .stack .fan .pc { --w: 100%; position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; font-size: 64px; }
+  .stack .fan .pc::before, .stack .fan .pc::after { font-size: 20px; }
+  .portrait {
+    position: relative; z-index: 1; margin: 0; padding: 8px; border-radius: 18px;
+    background: var(--surface); border: 1px solid var(--line);
+    box-shadow: 0 2px 0 var(--line), 0 40px 70px -34px var(--shadow);
+    transform-style: preserve-3d; will-change: transform;
   }
-  .card:hover { transform: rotate(-2deg) translateY(-4px); }
-  @media (prefers-reduced-motion: reduce) { .card, .card:hover { transition: none; transform: rotate(3deg); } }
-  img.card { display: block; object-fit: cover; height: auto; }
-  .card .corner { position: absolute; font-weight: 700; color: var(--teal-ink); line-height: 1; font-size: 18px; letter-spacing: -0.04em; text-align: center; }
-  .card .corner small { display: block; font-size: 16px; margin-top: 2px; }
-  .card .tl { top: 12px; left: 12px; }
-  .card .br { bottom: 12px; right: 12px; transform: rotate(180deg); }
-  .card .pip { position: absolute; inset: 0; display: grid; place-items: center; font-size: 52px; color: var(--teal); }
-  @media (max-width: 620px) {
-    .hero { grid-template-columns: 1fr; padding-block: 48px 40px; gap: 0; }
-    .card { display: none; }
+  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 490 / 672; object-fit: cover; border-radius: 12px; }
+  .portrait .shine {
+    position: absolute; inset: 8px; border-radius: 12px; pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%);
+    background-size: 250% 100%; background-position: var(--shine, 100%) 0; mix-blend-mode: soft-light;
+  }
+  .portrait .suit {
+    position: absolute; top: -12px; right: -12px; width: 36px; height: 36px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 17px; line-height: 1;
+    background: var(--mint); color: var(--teal-ink); border: 3px solid var(--ground);
   }
 
-  /* Sections */
-  section.block { padding-block: 56px; border-top: 1px solid var(--line); }
-  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .scroll-cue { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 1; font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; }
+  .scroll-cue i { width: 1px; height: 28px; background: linear-gradient(var(--muted), transparent); animation: cue 1.8s ease-in-out infinite; transform-origin: top; }
+  @keyframes cue { 0%, 100% { transform: scaleY(.4); } 50% { transform: scaleY(1); } }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 48px 96px; }
+    .stack { max-width: 230px; margin-inline: 12px auto; }
+    .hero-wrap .fl.wide-only { display: none; }
+    .hero-wrap .fl .pc { --w: 58px !important; }
+  }
+
+  /* ---------- Sections ---------- */
+  section.block { padding-block: 64px; border-top: 1px solid var(--line); position: relative; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 26px; flex-wrap: wrap; }
   h2 { font-size: 34px; letter-spacing: -0.045em; line-height: 1.1; font-weight: 600; color: var(--ink); margin: 0; }
   .tag { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
   h3 { font-size: 20px; letter-spacing: -0.025em; font-weight: 600; color: var(--ink); margin: 0 0 8px; }
   p { margin: 0 0 16px; max-width: 62ch; }
+  .side { display: none; }
+  @media (min-width: 1180px) { .side { display: block; } }
+
+  /* Parallax photo frames */
+  .plx { position: relative; overflow: hidden; margin: 28px 0 0; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); aspect-ratio: var(--ar, 16 / 10); }
+  .plx img {
+    position: absolute; left: 0; top: -14%; width: 100%; height: 128%; object-fit: cover;
+    will-change: transform; transition: scale .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .plx:hover img { scale: 1.04; }
+  figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  figure.ph { margin: 0; }
 
   /* Stats */
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 28px 0 32px; }
@@ -156,31 +207,101 @@
   .log .ev { color: var(--ink); font-weight: 500; }
   .log .ev small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
   .log .out { font-size: 14px; color: var(--teal-ink); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  @media (max-width: 520px) {
-    .log li { grid-template-columns: 48px 1fr; }
-    .log .out { grid-column: 2; text-align: left; white-space: normal; }
-  }
+  @media (max-width: 520px) { .log li { grid-template-columns: 48px 1fr; } .log .out { grid-column: 2; text-align: left; white-space: normal; } }
 
   /* Projects */
-  .projects { display: grid; gap: 16px; }
-  .project { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px 26px 22px; }
+  .projects { display: grid; gap: 18px; }
+  .project { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px 26px 22px; overflow: hidden; }
+  .project > .plx { margin: -26px -26px 22px; border-radius: 0; border: 0; border-bottom: 1px solid var(--line); }
   .project .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
   .chip { font-family: var(--mono); font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--mint-soft); color: var(--teal-ink); }
   .project p:last-of-type { margin-bottom: 0; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .pair .plx { margin: 0; border-radius: 10px; }
+  @media (max-width: 560px) { .pair { grid-template-columns: 1fr; } }
   .project .foot { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 14px; }
   .project .foot a { color: var(--teal-ink); font-weight: 500; text-decoration: none; }
   .project .foot a:hover { text-decoration: underline; }
 
   /* Contact */
-  .contact { padding-block: 64px 40px; border-top: 1px solid var(--line); }
+  .contact { padding-block: 72px 40px; border-top: 1px solid var(--line); position: relative; }
   .contact h2 { font-size: clamp(32px, 6vw, 44px); margin-bottom: 14px; text-wrap: balance; }
   .email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 20px; }
-  .email {
-    font-family: var(--mono); font-size: 15px; color: var(--ink); background: var(--surface);
-    border: 1px solid var(--line); border-radius: 10px; padding: 9px 14px; user-select: all; overflow-wrap: anywhere;
-  }
-  button.btn { cursor: pointer; font-family: inherit; }
+  .email { font-family: var(--mono); font-size: 15px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 14px; user-select: all; overflow-wrap: anywhere; }
   footer { padding-block: 28px 48px; font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+
+  /* ---------- Scroll progress ---------- */
+  .prog { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--teal); transform-origin: 0 50%; transform: scaleX(0); }
+
+  /* ---------- Portfolio reel ---------- */
+  .reel { position: relative; padding-block: 40px 64px; overflow: hidden; }
+  .reel-head { text-align: center; margin-bottom: 30px; }
+  .reel-head h2 { font-size: clamp(40px, 7vw, 64px); letter-spacing: -0.055em; }
+  .rows { display: grid; gap: 4px; }
+  .row { display: flex; gap: 14px; width: max-content; will-change: transform; padding-block: 7px; transform: translate3d(-33.33%, 0, 0); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;
+    padding: 12px 22px 12px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line);
+    font-size: clamp(18px, 2.4vw, 24px); font-weight: 600; letter-spacing: -0.03em; color: var(--ink);
+    box-shadow: 0 14px 30px -24px var(--shadow);
+  }
+  .pill .ico { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--mint-soft); color: var(--teal-ink); }
+  .pill .ico svg { width: 21px; height: 21px; }
+  .row.alt .pill { background: transparent; box-shadow: none; }
+  .row .pc { --w: 46px; align-self: center; flex: none; }
+  .row .pc.tilt-l { rotate: -10deg; }
+  .row .pc.tilt-r { rotate: 9deg; }
+
+  /* ---------- Section badges + watermark ---------- */
+  .sec-head { align-items: center; }
+  .sec-head .title { display: flex; align-items: center; gap: 14px; }
+  .badge {
+    width: 46px; height: 46px; flex: none; border-radius: 14px; display: grid; place-items: center;
+    background: var(--mint-soft); color: var(--teal-ink); border: 1px solid color-mix(in srgb, var(--teal) 25%, transparent);
+    will-change: transform;
+  }
+  .badge svg { width: 23px; height: 23px; }
+  section.block, .contact { isolation: isolate; }
+  .wm {
+    position: absolute; z-index: -1; top: 10px; right: -30px; pointer-events: none; will-change: transform;
+    font-size: clamp(220px, 34vw, 360px); line-height: 1; color: var(--ink); opacity: .035; font-family: var(--sans);
+  }
+  .wm.teal { color: var(--teal); opacity: .07; }
+  @media (max-width: 620px) { .wm { right: -70px; } }
+
+  /* ---------- Photo with tucked cards ---------- */
+  .photo { position: relative; isolation: isolate; margin-top: 44px; }
+  .photo > .plx { margin-top: 0; }
+  .photo .tuck { position: absolute; z-index: -1; top: -38px; right: 28px; }
+  .photo .tuck.left { right: auto; left: 22px; top: -30px; }
+  .photo .tuck .pc { --w: 70px; }
+
+  /* ---------- Reveal (transform only: content always visible) ---------- */
+  .rv { transition: translate .9s cubic-bezier(.2,.75,.2,1), rotate .9s cubic-bezier(.2,.75,.2,1); transition-delay: calc(var(--i, 0) * 70ms); }
+  .rv.pre { translate: 0 44px; }
+  .rv.pre.from-l { translate: -40px 0; }
+  .rv.pre.card-in { translate: 0 60px; rotate: 1.5deg; }
+
+  /* ---------- Project tilt + glow ---------- */
+  .project { position: relative; transition: box-shadow .3s, border-color .3s; will-change: transform; }
+  .project::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--teal) 14%, transparent), transparent 60%);
+  }
+  .project:hover { border-color: color-mix(in srgb, var(--teal) 45%, var(--line)); box-shadow: 0 30px 60px -40px var(--shadow); }
+  .project:hover::after { opacity: 1; }
+  .stat { position: relative; }
+  .stat .sico { position: absolute; top: 16px; right: 16px; width: 20px; height: 20px; color: var(--teal); }
+  .stat b { padding-right: 24px; }
+
+  @media (min-width: 980px) and (max-width: 1179px) { .side { display: block; } .side .pc { --w: 64px !important; } }
+  @media (prefers-reduced-motion: reduce) { .rv, .rv.pre { translate: none; rotate: none; transition: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fl > *, .scroll-cue i { animation: none; }
+    .plx img { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -194,113 +315,193 @@
       <a href="#contact">Contact</a>
     </nav>
   </div>
+  <div class="prog" id="prog"></div>
 </header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 20 11-11"/><path d="m15 9 2-2"/><path d="M17 3v2M21 7h-2M19.5 4.5l-1 1M14 4l.5 1.5M20 10l-1.5-.5"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></symbol><symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol><symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="m12 7 .8 1.7 1.7.8-1.7.8L12 12l-.8-1.7-1.7-.8 1.7-.8z" fill="currentColor"/></symbol><symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></symbol><symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></symbol><symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol></defs></svg>
 
-<main class="wrap" id="top">
-  <section class="hero">
-    <div>
-      <p class="eyebrow">Technology Consultant · Builder · Creator</p>
-      <h1>Jonathan Wang</h1>
-      <p class="lede">Eight years ago I picked up a deck of cards. Magic taught me the fundamentals of <em>problem solving, building, and communicating</em>. Now I bring those same principles to my career: meeting brilliant people, learning new technology, and building solutions for emerging problems.</p>
-      <div class="links">
-        <a class="btn primary" href="#projects">See my work</a>
-        <a class="btn" href="https://www.linkedin.com/in/jonathan-wang-54a741205/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3v-11zm6.5 0h3.8v1.5h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4v-11z"/></svg>
-          LinkedIn
-        </a>
-        <a class="btn" href="https://www.instagram.com/jonnywangmagic/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          Instagram
-        </a>
+<main id="top">
+  <!-- ================= HERO ================= -->
+  <section class="hero-wrap" data-root>
+    <!-- floating deck + icons (decorative) -->
+    <div aria-hidden="true">
+      <div class="fl" style="top:9%;left:3%" data-speed="-0.35" data-depth="1.2" data-rot="-18" data-spin="-20"><div class="pc" style="--d:.05s;--fx:260px;--fr:18deg" data-r="A" data-s="♠">♠</div></div>
+      <div class="fl wide-only" style="top:64%;left:6%" data-speed="-0.18" data-depth="0.7" data-rot="12" data-spin="16"><div class="pc red" style="--w:72px;--d:.15s;--fx:220px" data-r="K" data-s="♥">♥</div></div>
+      <div class="fl" style="top:6%;right:4%" data-speed="-0.28" data-depth="1" data-rot="16" data-spin="24"><div class="pc red" style="--w:78px;--d:.25s;--fx:-240px" data-r="Q" data-s="♦">♦</div></div>
+      <div class="fl wide-only" style="bottom:12%;right:9%" data-speed="-0.45" data-depth="1.5" data-rot="-10" data-spin="-18"><div class="pc" style="--w:96px;--d:.35s;--fx:-200px" data-r="J" data-s="♣">♣</div></div>
+      <div class="fl wide-only" style="top:40%;right:1.5%" data-speed="-0.12" data-depth="0.5" data-rot="24" data-spin="30"><div class="pc back" style="--w:64px;--d:.45s;--fx:-160px"></div></div>
+
+      <div class="fl wide-only" style="top:5%;left:47%" data-speed="-0.55" data-depth="1.8"><div class="chipicon" style="--d:.5s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg></div></div>
+      <div class="fl wide-only" style="bottom:9%;left:36%" data-speed="-0.3" data-depth="1.3"><div class="chipicon" style="--d:.6s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></div></div>
+      <div class="fl wide-only" style="top:3%;right:26%" data-speed="-0.4" data-depth="1.4"><div class="chipicon" style="--d:.7s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 20 11-11"/><path d="m15 9 2-2"/><path d="M17 3v2M21 7h-2M19.5 4.5l-1 1M14 4l.5 1.5M20 10l-1.5-.5"/></svg></div></div>
+    </div>
+
+    <div class="wrap hero">
+      <div class="stack" id="stack">
+        <div class="fan" aria-hidden="true">
+          <div class="pc red" data-r="A" data-s="♥" data-fan="-13">♥</div>
+          <div class="pc" data-r="A" data-s="♣" data-fan="11">♣</div>
+        </div>
+        <figure class="portrait" id="portrait">
+          <img src="images/headshot.jpg" alt="Portrait of Jonathan Wang" width="490" height="672">
+          <span class="shine" aria-hidden="true"></span>
+          <span class="suit" aria-hidden="true">♠</span>
+        </figure>
+      </div>
+      <div>
+        <p class="eyebrow">Technology Consultant · Builder · Creator</p>
+        <h1>Jonathan Wang</h1>
+        <p class="lede">Eight years ago I picked up a deck of cards. Magic taught me the fundamentals of <em>problem solving, building, and communicating</em>. Now I bring those same principles to my career: meeting brilliant people, learning new technology, and building solutions for emerging problems.</p>
+        <div class="links">
+          <a class="btn primary" href="#projects">See my work</a>
+          <a class="btn" href="https://www.linkedin.com/in/jonathan-wang-54a741205/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3v-11zm6.5 0h3.8v1.5h.05c.53-.95 1.830-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4v-11z"/></svg>
+            LinkedIn
+          </a>
+          <a class="btn" href="https://www.instagram.com/jonnywangmagic/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+        </div>
       </div>
     </div>
-    <div class="card" aria-hidden="true">
-      <div class="corner tl">JW<small>♠</small></div>
-      <div class="pip">♠</div>
-      <div class="corner br">JW<small>♠</small></div>
-    </div>
+    <a class="scroll-cue" href="#magic">Scroll<i></i></a>
   </section>
 
-  <section class="block" id="magic">
-    <div class="sec-head">
-      <h2>Magic</h2>
-      <span class="tag">Jonny Wang Magic · est. 2022</span>
-    </div>
-    <p>Jonny Wang Magic is a personal business I founded to bring entertainment to parties, concerts, and events. I also perform street magic on Instagram as a way to meet new people. It's the same skill set as consulting: read the room, earn trust fast, and deliver a moment people remember.</p>
-
-    <div class="stats">
-      <div class="stat"><b>100K+</b><span>Instagram views in the first 60 days</span></div>
-      <div class="stat"><b>20K+</b><span>views on the top video</span></div>
-      <div class="stat"><b>$170K+</b><span>raised across two Relay4Life events</span></div>
-    </div>
-
-    <p class="log-title">Notable performances</p>
-    <ul class="log">
-      <li><span class="yr">2026</span><span class="ev">Ernst &amp; Young<small>Client workshop, pro-bono engagement</small></span><span class="out">Corporate</span></li>
-      <li><span class="yr">2026</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$70,000+ raised</span></li>
-      <li><span class="yr">2026</span><span class="ev">Western Japan Festival</span><span class="out">200+ attendees</span></li>
-      <li><span class="yr">2026</span><span class="ev">Anime Maid Cafe<small>Exclusive event</small></span><span class="out">~80 attendees</span></li>
-      <li><span class="yr">2025</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$100,000+ raised</span></li>
-    </ul>
+  <section class="reel" aria-label="Portfolio overview">
+    <div class="wrap reel-head"><p class="eyebrow" style="margin:0 0 10px">Selected work</p><h2>Portfolio</h2></div>
+    <div class="rows" aria-hidden="true"><div class="row " data-dir="1"><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc red tilt-l" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>AmberShield</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc red tilt-r" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc red tilt-l" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>AmberShield</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc  tilt-r" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc  tilt-l" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>AmberShield</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span></div><div class="row alt" data-dir="-1"><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc red tilt-l" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc red tilt-r" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc red tilt-l" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc  tilt-r" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc  tilt-l" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span></div></div>
   </section>
 
-  <section class="block" id="content">
-    <div class="sec-head">
-      <h2>Content creation</h2>
-      <span class="tag">UGC · Hyperknow.io</span>
-    </div>
-    <p>I created user-generated content for a campaign with Hyperknow.io, turning a product into short-form videos people actually watched.</p>
-    <div class="stats two">
-      <div class="stat"><b>100K+</b><span>total views over the campaign</span></div>
-      <div class="stat"><b>10K+</b><span>views on the top video</span></div>
-    </div>
-  </section>
+  <!-- ================= MAGIC ================= -->
+  <div class="wrap">
+    <section class="block" id="magic" data-root>
+      <div class="wm fl" data-speed="0.22" data-rot="-8" data-spin="14" aria-hidden="true">♠</div>
+      <div class="side fl" style="top:70px;right:-170px" data-speed="0.25" data-rot="14" data-spin="40" aria-hidden="true"><div class="pc red" style="--w:92px" data-r="7" data-s="♦">♦</div></div>
+      <div class="side fl" style="top:52%;left:-160px" data-speed="-0.2" data-rot="-12" data-spin="-30" aria-hidden="true"><div class="pc back" style="--w:80px"></div></div>
+      <div class="side fl" style="bottom:12%;right:-120px" data-speed="0.4" aria-hidden="true"><div class="chipicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 20 11-11"/><path d="m15 9 2-2"/><path d="M17 3v2M21 7h-2M19.5 4.5l-1 1"/></svg></div></div>
 
-  <section class="block" id="projects">
-    <div class="sec-head">
-      <h2>Projects</h2>
-      <span class="tag">Things I've built</span>
-    </div>
-    <div class="projects">
-      <article class="project">
-        <h3>Protag-A-Me</h3>
-        <div class="meta"><span class="chip">AI</span><span class="chip">Web app</span><span class="chip">Wellbeing</span></div>
-        <p>An AI journal that rewrites your daily entries as fantasy stories. The idea: every day can be an adventure in its own way, and seeing it that way makes reflection feel lighter and more positive.</p>
-        <div class="foot"><a href="https://protagame.vercel.app" target="_blank" rel="noopener">protagame.vercel.app ↗</a></div>
-      </article>
-      <article class="project">
-        <h3>AmberShield Fire Grid</h3>
-        <div class="meta"><span class="chip">RBC Design Thinking</span><span class="chip">Geospatial</span><span class="chip">Team of 4</span></div>
-        <p>Reactive firefighting software for Canadian forest fires. It combines satellite imagery (NASA FIRMS hotspots, CWFIS/NRCan) with real-time data to recommend where to dispatch crews and how to contain a fire.</p>
-        <p>Built through the RBC Design Thinking Program: we defined the problem, mapped the customer journey, ran customer interviews, and pitched to RBCx.</p>
-      </article>
-    </div>
-  </section>
+      <div class="sec-head">
+        <div class="title"><span class="badge" data-badge><svg aria-hidden="true"><use href="#i-wand"/></svg></span><h2>Magic</h2></div>
+        <span class="tag">Jonny Wang Magic · est. 2022</span>
+      </div>
+      <p>Jonny Wang Magic is a personal business I founded to bring entertainment to parties, concerts, and events. I also perform street magic on Instagram as a way to meet new people. It's the same skill set as consulting: read the room, earn trust fast, and deliver a moment people remember.</p>
 
-  <section class="contact" id="contact">
-    <p class="eyebrow">Contact</p>
-    <h2>Let's build something.</h2>
-    <p>Open to conversations about consulting, tech, and projects — or booking a magic set for your next event.</p>
-    <div class="email-row">
-      <span class="email" id="email">jonathanwang.hba2027@ivey.ca</span>
-      <button class="btn" type="button" id="copy">Copy email</button>
-    </div>
-    <div class="links">
-      <a class="btn" href="https://www.linkedin.com/in/jonathan-wang-54a741205/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a class="btn" href="https://www.instagram.com/jonnywangmagic/" target="_blank" rel="noopener">@jonnywangmagic ↗</a>
-    </div>
-  </section>
+      <div class="photo" data-root>
+        <div class="tuck fl" data-speed="0.12" data-rot="14" data-spin="22" aria-hidden="true"><div class="pc red" data-r="Q" data-s="♥">♥</div></div>
+        <div class="tuck left fl" data-speed="0.2" data-rot="-12" data-spin="-18" aria-hidden="true"><div class="pc" style="--w:58px" data-r="A" data-s="♠">♠</div></div>
+        <div class="plx" style="--ar: 935 / 400">
+          <img src="images/magic-performance.jpg" alt="Jonathan performing magic for a large audience in a school gym" loading="lazy" width="935" height="343">
+        </div>
+      </div>
 
-  <footer>
-    <span>© 2026 Jonathan Wang</span>
-    <span>Consultant · Builder · Creator ♠</span>
-  </footer>
+      <div class="stats">
+        <div class="stat"><svg class="sico" aria-hidden="true"><use href="#i-chart"/></svg><b>100K+</b><span>Instagram views in the first 60 days</span></div>
+        <div class="stat"><svg class="sico" aria-hidden="true"><use href="#i-play"/></svg><b>20K+</b><span>views on the top video</span></div>
+        <div class="stat"><svg class="sico" aria-hidden="true"><use href="#i-users"/></svg><b>$170K+</b><span>raised across two Relay4Life events</span></div>
+      </div>
+
+      <p class="log-title">Notable performances</p>
+      <ul class="log">
+        <li><span class="yr">2026</span><span class="ev">Ernst &amp; Young<small>Client workshop, pro-bono engagement</small></span><span class="out">Corporate</span></li>
+        <li><span class="yr">2026</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$70,000+ raised</span></li>
+        <li><span class="yr">2026</span><span class="ev">Western Japan Festival</span><span class="out">200+ attendees</span></li>
+        <li><span class="yr">2026</span><span class="ev">Anime Maid Cafe<small>Exclusive event</small></span><span class="out">~80 attendees</span></li>
+        <li><span class="yr">2025</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$100,000+ raised</span></li>
+      </ul>
+    </section>
+
+    <!-- ================= CONTENT ================= -->
+    <section class="block" id="content" data-root>
+      <div class="wm teal fl" style="top:-30px" data-speed="0.18" data-rot="10" data-spin="-14" aria-hidden="true">♥</div>
+      <div class="side fl" style="top:40px;left:-150px" data-speed="0.3" aria-hidden="true"><div class="chipicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg></div></div>
+      <div class="side fl" style="top:45%;right:-165px" data-speed="-0.3" data-rot="-16" data-spin="-36" aria-hidden="true"><div class="pc" style="--w:84px" data-r="10" data-s="♣">♣</div></div>
+
+      <div class="sec-head">
+        <div class="title"><span class="badge" data-badge><svg aria-hidden="true"><use href="#i-play"/></svg></span><h2>Content creation</h2></div>
+        <span class="tag">UGC · Hyperknow.io</span>
+      </div>
+      <p>I created user-generated content for a campaign with Hyperknow.io, turning a product into short-form videos people actually watched.</p>
+      <figure class="ph photo" data-root>
+        <div class="tuck fl" data-speed="0.14" data-rot="-10" data-spin="-20" aria-hidden="true"><div class="chipicon" style="width:56px;height:56px"><svg aria-hidden="true"><use href="#i-play"/></svg></div></div>
+        <div class="plx" style="--ar: 16 / 10">
+          <img src="images/ugc-hyperknow.jpg" alt="The @jonnystudytime Instagram profile showing a grid of short study-themed videos" loading="lazy" width="1400" height="917">
+        </div>
+        <figcaption>@jonnystudytime, the account behind the Hyperknow.io campaign</figcaption>
+      </figure>
+      <div class="stats two">
+        <div class="stat"><svg class="sico" aria-hidden="true"><use href="#i-chart"/></svg><b>100K+</b><span>total views over the campaign</span></div>
+        <div class="stat"><svg class="sico" aria-hidden="true"><use href="#i-play"/></svg><b>10K+</b><span>views on the top video</span></div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section class="block" id="projects" data-root>
+      <div class="wm teal fl" data-speed="0.2" data-rot="6" data-spin="12" aria-hidden="true">♦</div>
+      <div class="side fl" style="top:90px;right:-160px" data-speed="0.35" aria-hidden="true"><div class="chipicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></div></div>
+      <div class="side fl" style="top:38%;left:-170px" data-speed="-0.25" data-rot="10" data-spin="30" aria-hidden="true"><div class="pc red" style="--w:90px" data-r="K" data-s="♦">♦</div></div>
+      <div class="side fl" style="bottom:14%;right:-150px" data-speed="0.2" aria-hidden="true"><div class="chipicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/></svg></div></div>
+
+      <div class="sec-head">
+        <div class="title"><span class="badge" data-badge><svg aria-hidden="true"><use href="#i-code"/></svg></span><h2>Projects</h2></div>
+        <span class="tag">Things I've built</span>
+      </div>
+      <div class="projects">
+        <article class="project">
+          <div class="plx" style="--ar: 16 / 8">
+            <img src="images/protag-a-me.jpg" alt="Protag-a-Me landing page: a leather journal and the line 'Your life is a story worth telling'" loading="lazy" width="1200" height="876">
+          </div>
+          <h3>Protag-A-Me</h3>
+          <div class="meta"><span class="chip">AI</span><span class="chip">Web app</span><span class="chip">Wellbeing</span></div>
+          <p>An AI journal that rewrites your daily entries as fantasy stories. The idea: every day can be an adventure in its own way, and seeing it that way makes reflection feel lighter and more positive.</p>
+          <div class="foot"><a href="https://protagame.vercel.app" target="_blank" rel="noopener">protagame.vercel.app ↗</a></div>
+        </article>
+        <article class="project">
+          <h3>AmberShield Fire Grid</h3>
+          <div class="meta"><span class="chip">RBC Design Thinking</span><span class="chip">Geospatial</span><span class="chip">Team of 4</span></div>
+          <p>Reactive firefighting software for Canadian forest fires. It combines satellite imagery (NASA FIRMS hotspots, CWFIS/NRCan) with real-time data to recommend where to dispatch crews and how to contain a fire.</p>
+          <p>Built through the RBC Design Thinking Program: we defined the problem, mapped the customer journey, ran customer interviews, and pitched to RBCx.</p>
+          <div class="pair">
+            <figure class="ph">
+              <div class="plx"><img src="images/ambershield-demo.jpg" alt="AmberShield mission-control map of a BC wildfire with AI containment recommendations" loading="lazy" width="1400" height="768"></div>
+              <figcaption>Mission control: live perimeter and AI containment recommendations</figcaption>
+            </figure>
+            <figure class="ph">
+              <div class="plx"><img src="images/ambershield-pitch.jpg" alt="Jonathan and his team pitching AmberShield on stage to an audience" loading="lazy" width="1400" height="830"></div>
+              <figcaption>Pitching with the team</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact" data-root>
+      <div class="wm fl" style="top:-40px" data-speed="0.15" data-rot="-6" data-spin="-12" aria-hidden="true">♣</div>
+      <div class="side fl" style="top:60px;right:-140px" data-speed="0.3" data-rot="-8" data-spin="-24" aria-hidden="true"><div class="pc" style="--w:88px" data-r="A" data-s="♠">♠</div></div>
+      <p class="eyebrow">Contact</p>
+      <h2>Let's build something.</h2>
+      <p>Open to conversations about consulting, tech, and projects — or booking a magic set for your next event.</p>
+      <div class="email-row">
+        <span class="email" id="email">jonathanwang.hba2027@ivey.ca</span>
+        <button class="btn" type="button" id="copy">Copy email</button>
+      </div>
+      <div class="links">
+        <a class="btn" href="https://www.linkedin.com/in/jonathan-wang-54a741205/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://www.instagram.com/jonnywangmagic/" target="_blank" rel="noopener">@jonnywangmagic ↗</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Jonathan Wang</span>
+      <span>Consultant · Builder · Creator ♠</span>
+    </footer>
+  </div>
 </main>
 
 <script>
+  // Copy email
   (function () {
-    var btn = document.getElementById('copy');
-    var email = document.getElementById('email');
+    var btn = document.getElementById('copy'), email = document.getElementById('email');
     btn.addEventListener('click', function () {
       var text = email.textContent.trim();
       var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); };
@@ -309,12 +510,165 @@
         var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
         btn.textContent = 'Selected — press copy';
       };
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(done, fallback);
-        } else { fallback(); }
-      } catch (e) { fallback(); }
+      try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
     });
+  })();
+
+  // Parallax engine
+  (function () {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var floaters = [].slice.call(document.querySelectorAll('.fl'));
+    var frames = [].slice.call(document.querySelectorAll('.plx'));
+    var fans = [].slice.call(document.querySelectorAll('[data-fan]'));
+    var portrait = document.getElementById('portrait');
+    var hero = document.querySelector('.hero-wrap');
+
+    // Static resting pose (also what reduced-motion viewers get)
+    floaters.forEach(function (el) { el.style.transform = 'rotate(' + (+el.dataset.rot || 0) + 'deg)'; });
+    fans.forEach(function (el) { el.style.transform = 'rotate(' + el.dataset.fan + 'deg)'; });
+    if (reduce) return;
+
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    var finePointer = matchMedia('(pointer: fine)').matches;
+    if (finePointer) {
+      window.addEventListener('mousemove', function (e) {
+        mouse.tx = (e.clientX / innerWidth) * 2 - 1;
+        mouse.ty = (e.clientY / innerHeight) * 2 - 1;
+      }, { passive: true });
+    }
+
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+    function tick() {
+      mouse.x += (mouse.tx - mouse.x) * 0.08;
+      mouse.y += (mouse.ty - mouse.y) * 0.08;
+      var vh = innerHeight;
+
+      floaters.forEach(function (el) {
+        var root = el.closest('[data-root]');
+        var r = root.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        var rel = (r.top + r.height / 2 - vh / 2);           // px from viewport centre
+        var p = clamp(rel / vh, -1.5, 1.5);
+        var speed = +el.dataset.speed || 0, depth = +el.dataset.depth || 0;
+        var y = rel * speed + mouse.y * depth * 18;
+        var x = mouse.x * depth * 22;
+        var rot = (+el.dataset.rot || 0) + p * (+el.dataset.spin || 0);
+        el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + rot.toFixed(2) + 'deg)';
+      });
+
+      frames.forEach(function (f) {
+        var r = f.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        var p = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1);
+        f.firstElementChild.style.transform = 'translate3d(0,' + (p * r.height * 0.12).toFixed(1) + 'px,0)';
+      });
+
+      var hr = hero.getBoundingClientRect();
+      if (hr.bottom > 0) {
+        var s = clamp(-hr.top / hr.height, 0, 1);           // 0 at top → 1 when scrolled past
+        fans.forEach(function (el) {
+          var base = +el.dataset.fan;
+          el.style.transform = 'translate3d(' + (base * s * 3).toFixed(1) + 'px,' + (s * 20).toFixed(1) + 'px,0) rotate(' + (base * (1 + s * 1.4) + mouse.x * base * .15).toFixed(2) + 'deg)';
+        });
+        portrait.style.transform = 'rotateY(' + (mouse.x * 9).toFixed(2) + 'deg) rotateX(' + (-mouse.y * 7).toFixed(2) + 'deg) translate3d(0,' + (s * -30).toFixed(1) + 'px,0) rotate(-2deg)';
+        portrait.style.setProperty('--shine', (50 - mouse.x * 50).toFixed(1) + '%');
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // Portfolio effects: reel, badges, progress, reveals, count-up, tilt
+  (function () {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var prog = document.getElementById('prog');
+    var rows = [].slice.call(document.querySelectorAll('.reel .row'));
+    var badges = [].slice.call(document.querySelectorAll('[data-badge]'));
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+    function frame() {
+      var max = document.documentElement.scrollHeight - innerHeight;
+      prog.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0).toFixed(4) + ')';
+      if (!reduce) {
+        var vh = innerHeight;
+        rows.forEach(function (r) {
+          var rect = r.parentNode.getBoundingClientRect();
+          if (rect.bottom < -100 || rect.top > vh + 100) return;
+          var rel = rect.top + rect.height / 2 - vh / 2;
+          var third = r.scrollWidth / 3;
+          r.style.transform = 'translate3d(' + (-third + (+r.dataset.dir) * rel * 0.6).toFixed(1) + 'px,0,0)';
+        });
+        badges.forEach(function (b) {
+          var rect = b.getBoundingClientRect();
+          var p = clamp((rect.top - vh / 2) / vh, -1, 1);
+          b.style.transform = 'rotate(' + (p * -70).toFixed(1) + 'deg) translateY(' + (p * 8).toFixed(1) + 'px)';
+        });
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    if (reduce) return;
+
+    // Reveal + count-up only for things that start below the fold, so the first view is always complete
+    var targets = [];
+    function mark(sel, cls, stagger) {
+      [].slice.call(document.querySelectorAll(sel)).forEach(function (el, i) {
+        if (el.getBoundingClientRect().top < innerHeight) return;
+        el.classList.add('rv', 'pre'); if (cls) el.classList.add(cls);
+        if (stagger) el.style.setProperty('--i', i % 6);
+        targets.push(el);
+      });
+    }
+    mark('.photo', null, false);
+    mark('.stats', null, false);
+    mark('.log li', 'from-l', true);
+    mark('.project', 'card-in', true);
+    mark('.pair .ph', null, true);
+    mark('.email-row, .contact .links', null, true);
+
+    var counters = [];
+    [].slice.call(document.querySelectorAll('.stat b')).forEach(function (b) {
+      if (b.getBoundingClientRect().top < innerHeight) return;
+      var m = b.textContent.match(/^(\D*)([\d,.]+)(.*)$/); if (!m) return;
+      b.dataset.final = b.textContent; b.dataset.pre = m[1]; b.dataset.n = m[2].replace(/,/g, ''); b.dataset.suf = m[3];
+      counters.push(b);
+    });
+    function count(b) {
+      var n = +b.dataset.n, t0 = performance.now();
+      (function step(t) {
+        var k = Math.min(1, (t - t0) / 1200), e = 1 - Math.pow(1 - k, 3);
+        b.textContent = b.dataset.pre + Math.round(n * e) + b.dataset.suf;
+        if (k < 1) requestAnimationFrame(step); else b.textContent = b.dataset.final;
+      })(t0);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          io.unobserve(e.target);
+          if (e.target.tagName === 'B') count(e.target); else e.target.classList.remove('pre');
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      targets.forEach(function (el) { io.observe(el); });
+      counters.forEach(function (b) { io.observe(b); });
+    } else {
+      targets.forEach(function (el) { el.classList.remove('pre'); });
+    }
+
+    // 3D tilt on project cards (mouse only)
+    if (matchMedia('(pointer: fine)').matches) {
+      [].slice.call(document.querySelectorAll('.project')).forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var r = card.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+          card.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+          card.style.transform = 'perspective(1100px) rotateY(' + ((x - .5) * 5).toFixed(2) + 'deg) rotateX(' + ((.5 - y) * 5).toFixed(2) + 'deg)';
+        });
+        card.addEventListener('mouseleave', function () { card.style.transform = ''; });
+      });
+    }
   })();
 </script>
 
