@@ -298,6 +298,95 @@
   @media (min-width: 980px) and (max-width: 1179px) { .side { display: block; } .side .pc { --w: 64px !important; } }
   @media (prefers-reduced-motion: reduce) { .rv, .rv.pre { translate: none; rotate: none; transition: none; } }
 
+  /* ---------- Argus: Firegrid demo theater ---------- */
+  .project.argus {
+    --amb: 230, 110, 40;
+    --fire: #FF8A3D;
+    background:
+      radial-gradient(120% 55% at 50% 0%, rgba(var(--amb), .22), transparent 70%),
+      var(--surface);
+    transition: box-shadow .3s, border-color .3s, background .8s;
+  }
+  .screen-wrap { margin: -26px -26px 0; padding: 0; background: #06090A; }
+  .screen {
+    position: relative; overflow: hidden; isolation: isolate; background: #06090A;
+    transform-origin: 50% 30%; will-change: transform;
+    box-shadow: 0 30px 80px -30px rgba(var(--amb), .55);
+  }
+  .viewport { position: relative; aspect-ratio: 1600 / 838; overflow: hidden; }
+  .viewport video { display: block; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+  .screen .scan {
+    position: absolute; inset: 0; pointer-events: none; z-index: 1; mix-blend-mode: overlay; opacity: .5;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
+  }
+  .screen .vignette { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(120% 90% at 50% 50%, transparent 62%, rgba(0,0,0,.5)); }
+  .hud-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 14px;
+    color: #F4F7F6; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; background: #06090A;
+  }
+  .hud-bar.top { border-bottom: 1px solid rgba(255,255,255,.07); }
+  .hud-bar.bottom { padding-block: 8px; }
+  .hud-bar .live { display: inline-flex; align-items: center; gap: 8px; }
+  .hud-bar .live i { width: 8px; height: 8px; border-radius: 50%; background: #FF4D3D; animation: livepulse 1.6s infinite; }
+  @keyframes livepulse { 0% { box-shadow: 0 0 0 0 rgba(255,77,61,.7); } 70% { box-shadow: 0 0 0 8px rgba(255,77,61,0); } 100% { box-shadow: 0 0 0 0 rgba(255,77,61,0); } }
+  .hud-bar .dim { opacity: .65; }
+  .hud-bar .tc { font-variant-numeric: tabular-nums; }
+  .hud-bar .chap { color: var(--fire); }
+  .corner { position: absolute; z-index: 2; width: 22px; height: 22px; border: 2px solid var(--fire); opacity: .9; pointer-events: none; }
+  .corner.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: 14px; left: 12px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: 14px; right: 12px; border-left: 0; border-top: 0; }
+  .vbtns { display: flex; gap: 8px; }
+  .vbtn {
+    width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); color: #fff;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background .15s;
+  }
+  .vbtn:hover { background: rgba(255,255,255,.24); }
+  .vbtn svg { width: 16px; height: 16px; }
+  .bigplay {
+    position: absolute; z-index: 3; left: 50%; top: 50%; translate: -50% -50%; width: 74px; height: 74px; border-radius: 50%;
+    display: grid; place-items: center; cursor: pointer; color: #fff; border: 1px solid rgba(255,255,255,.35);
+    background: rgba(255,138,61,.85); box-shadow: 0 0 0 10px rgba(255,138,61,.18), 0 20px 40px -10px rgba(0,0,0,.6);
+    transition: scale .2s, opacity .2s;
+  }
+  .bigplay:hover { scale: 1.06; }
+  .bigplay svg { width: 28px; height: 28px; margin-left: 4px; }
+  .screen.playing .bigplay { opacity: 0; pointer-events: none; scale: .8; }
+  .vprog { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 3; background: rgba(255,255,255,.12); }
+  .vprog b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--fire), #FFC46B); }
+
+  .chapters { display: flex; gap: 6px; overflow-x: auto; padding: 12px 14px 14px; background: #06090A; scrollbar-width: none; }
+  .chapters::-webkit-scrollbar { display: none; }
+  .chapters button {
+    flex: 1 0 auto; min-width: 104px; text-align: left; cursor: pointer; position: relative; overflow: hidden;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 8px 10px 9px;
+    color: rgba(255,255,255,.62); font-family: var(--mono); font-size: 11px; line-height: 1.35; transition: color .2s, border-color .2s, background .2s;
+  }
+  .chapters button strong { display: block; font-family: var(--sans); font-size: 13px; letter-spacing: -0.01em; text-transform: none; font-weight: 600; }
+  .chapters button:hover { color: #fff; border-color: rgba(255,255,255,.25); }
+  .chapters button.on { color: #fff; border-color: rgba(255,138,61,.6); background: rgba(255,138,61,.12); }
+  .chapters button .fill { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--fire); }
+  .argus-body { padding-top: 22px; }
+
+  /* Theater mode */
+  .theater-backdrop {
+    position: fixed; inset: 0; z-index: 100; background: rgba(4,6,7,.92); display: grid; place-items: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 56px) 16px calc(env(safe-area-inset-bottom, 0px) + 24px);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .theater-backdrop .stage { width: min(1400px, 100%, calc((100vh - 200px) * 1600 / 838)); }
+  .theater-backdrop .screen { border-radius: 14px; transform: none !important; box-shadow: 0 0 120px -20px rgba(var(--amb), .6); }
+  .theater-backdrop .close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 14px); right: 16px; }
+  body.is-theater { overflow: hidden; }
+  @media (max-width: 560px) {
+    .corner { display: none; }
+    .hud-bar.top .dim { display: none; }
+    .bigplay { width: 58px; height: 58px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hud-bar .live i { animation: none; } }
+
   @media (prefers-reduced-motion: reduce) {
     .fl > *, .scroll-cue i { animation: none; }
     .plx img { transition: none; }
@@ -369,7 +458,7 @@
 
   <section class="reel" aria-label="Portfolio overview">
     <div class="wrap reel-head"><p class="eyebrow" style="margin:0 0 10px">Selected work</p><h2>Portfolio</h2></div>
-    <div class="rows" aria-hidden="true"><div class="row " data-dir="1"><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc red tilt-l" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>AmberShield</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc red tilt-r" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc red tilt-l" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>AmberShield</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc  tilt-r" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc  tilt-l" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>AmberShield</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span></div><div class="row alt" data-dir="-1"><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc red tilt-l" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc red tilt-r" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc red tilt-l" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc  tilt-r" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc  tilt-l" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span></div></div>
+    <div class="rows" aria-hidden="true"><div class="row " data-dir="1"><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc red tilt-l" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>Argus: Firegrid</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc red tilt-r" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc red tilt-l" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>Argus: Firegrid</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc  tilt-r" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Magic</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>Content creation</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>Projects</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-book"/></svg></span>Protag-A-Me</span><span class="pc  tilt-l" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>Argus: Firegrid</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>Live events</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span></div><div class="row alt" data-dir="-1"><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc red tilt-l" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc red tilt-r" data-r="K" data-s="♥">♥</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc red tilt-l" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc  tilt-r" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span>Consulting</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>Design thinking</span><span class="pc red tilt-r" data-r="Q" data-s="♦">♦</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-chart"/></svg></span>100K+ views</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-wand"/></svg></span>Street magic</span><span class="pc  tilt-l" data-r="J" data-s="♣">♣</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-code"/></svg></span>AI builds</span><span class="pill"><span class="ico"><svg aria-hidden="true"><use href="#i-play"/></svg></span>UGC campaigns</span><span class="pc  tilt-r" data-r="A" data-s="♠">♠</span></div></div>
   </section>
 
   <!-- ================= MAGIC ================= -->
@@ -402,7 +491,7 @@
 
       <p class="log-title">Notable performances</p>
       <ul class="log">
-        <li><span class="yr">2026</span><span class="ev">Ernst &amp; Young<small>Client workshop, pro-bono engagement</small></span><span class="out">Corporate</span></li>
+        <li><span class="yr">2026</span><span class="ev">Ernst &amp; Young<small>Client workshop, pro-bono engagement</small></span><span class="out">Over 40+ Client Members</span></li>
         <li><span class="yr">2026</span><span class="ev">Relay4Life<small>Fundraiser</small></span><span class="out">$70,000+ raised</span></li>
         <li><span class="yr">2026</span><span class="ev">Western Japan Festival</span><span class="out">200+ attendees</span></li>
         <li><span class="yr">2026</span><span class="ev">Anime Maid Cafe<small>Exclusive event</small></span><span class="out">~80 attendees</span></li>
@@ -455,20 +544,48 @@
           <p>An AI journal that rewrites your daily entries as fantasy stories. The idea: every day can be an adventure in its own way, and seeing it that way makes reflection feel lighter and more positive.</p>
           <div class="foot"><a href="https://protagame.vercel.app" target="_blank" rel="noopener">protagame.vercel.app ↗</a></div>
         </article>
-        <article class="project">
-          <h3>AmberShield Fire Grid</h3>
-          <div class="meta"><span class="chip">RBC Design Thinking</span><span class="chip">Geospatial</span><span class="chip">Team of 4</span></div>
+        <article class="project argus" id="argus">
+          <div class="screen-wrap">
+            <div class="screen" id="screen">
+              <div class="hud-bar top">
+                <span class="live"><i></i>Live demo</span>
+                <span class="dim">Argus · Firegrid · Mission control</span>
+              </div>
+              <div class="viewport">
+                <video id="demo" src="videos/argus-demo.mp4" poster="images/argus-poster.jpg" muted loop playsinline preload="metadata" aria-label="Argus: Firegrid demo: zooming from a global view into a BC wildfire, then AI containment recommendations and crew dispatch"></video>
+                <span class="scan" aria-hidden="true"></span>
+                <span class="vignette" aria-hidden="true"></span>
+                <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+                <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+                <button class="bigplay" type="button" id="bigPlay" aria-label="Play demo"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+                <div class="vprog" aria-hidden="true"><b id="vProg"></b></div>
+              </div>
+              <div class="hud-bar bottom">
+                <span><span class="tc" id="tc">00:00 / 01:05</span> · <span class="chap" id="chapName">Detect</span></span>
+                <span class="vbtns">
+                  <button class="vbtn" type="button" id="vToggle" aria-label="Pause demo"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path id="vIcon" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+                  <button class="vbtn" type="button" id="vTheater" aria-label="Watch in theater mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+                </span>
+              </div>
+            </div>
+            <div class="chapters" id="chapters" aria-label="Demo chapters">
+              <button type="button" data-t="0"><span>00:00</span><strong>Detect</strong><i class="fill"></i></button>
+              <button type="button" data-t="5"><span>00:05</span><strong>Locate</strong><i class="fill"></i></button>
+              <button type="button" data-t="12"><span>00:12</span><strong>Analyze</strong><i class="fill"></i></button>
+              <button type="button" data-t="24"><span>00:24</span><strong>Recommend</strong><i class="fill"></i></button>
+              <button type="button" data-t="33"><span>00:33</span><strong>Deploy</strong><i class="fill"></i></button>
+              <button type="button" data-t="40"><span>00:40</span><strong>Dispatch</strong><i class="fill"></i></button>
+            </div>
+          </div>
+          <div class="argus-body">
+          <h3>Argus: Firegrid</h3>
+          <div class="meta"><span class="chip">Design Thinking</span><span class="chip">Geospatial</span><span class="chip">Figma Ideation</span></div>
           <p>Reactive firefighting software for Canadian forest fires. It combines satellite imagery (NASA FIRMS hotspots, CWFIS/NRCan) with real-time data to recommend where to dispatch crews and how to contain a fire.</p>
           <p>Built through the RBC Design Thinking Program: we defined the problem, mapped the customer journey, ran customer interviews, and pitched to RBCx.</p>
-          <div class="pair">
-            <figure class="ph">
-              <div class="plx"><img src="images/ambershield-demo.jpg" alt="AmberShield mission-control map of a BC wildfire with AI containment recommendations" loading="lazy" width="1400" height="768"></div>
-              <figcaption>Mission control: live perimeter and AI containment recommendations</figcaption>
-            </figure>
-            <figure class="ph">
-              <div class="plx"><img src="images/ambershield-pitch.jpg" alt="Jonathan and his team pitching AmberShield on stage to an audience" loading="lazy" width="1400" height="830"></div>
-              <figcaption>Pitching with the team</figcaption>
-            </figure>
+          <figure class="ph" style="margin-top:20px">
+            <div class="plx" style="--ar: 16 / 8"><img src="images/ambershield-pitch.jpg" alt="Jonathan and his team pitching Argus: Firegrid on stage to an audience" loading="lazy" width="1400" height="830"></div>
+            <figcaption>Pitching with my team</figcaption>
+          </figure>
           </div>
         </article>
       </div>
@@ -658,7 +775,7 @@
 
     // 3D tilt on project cards (mouse only)
     if (matchMedia('(pointer: fine)').matches) {
-      [].slice.call(document.querySelectorAll('.project')).forEach(function (card) {
+      [].slice.call(document.querySelectorAll('.project:not(.argus)')).forEach(function (card) {
         card.addEventListener('mousemove', function (e) {
           var r = card.getBoundingClientRect();
           var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
@@ -669,6 +786,117 @@
         card.addEventListener('mouseleave', function () { card.style.transform = ''; });
       });
     }
+  })();
+
+  // Argus: Firegrid demo theater
+  (function () {
+    var v = document.getElementById('demo'); if (!v) return;
+    var screen = document.getElementById('screen'), card = document.getElementById('argus');
+    var wrap = screen.parentNode, chaptersEl = document.getElementById('chapters');
+    var btns = [].slice.call(chaptersEl.querySelectorAll('button'));
+    var tc = document.getElementById('tc'), chapName = document.getElementById('chapName'), prog = document.getElementById('vProg');
+    var toggle = document.getElementById('vToggle'), icon = document.getElementById('vIcon');
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var userPaused = false, inView = false, theater = null;
+    var PAUSE = 'M7 5h4v14H7zM13 5h4v14h-4z', PLAY = 'M7 4.5v15l12-7.5z';
+
+    function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + s % 60).slice(-2); }
+    function play() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    function sync() {
+      var on = !v.paused;
+      screen.classList.toggle('playing', on);
+      icon.setAttribute('d', on ? PAUSE : PLAY);
+      toggle.setAttribute('aria-label', on ? 'Pause demo' : 'Play demo');
+    }
+    v.addEventListener('play', sync); v.addEventListener('pause', sync);
+
+    v.addEventListener('timeupdate', function () {
+      var t = v.currentTime, d = v.duration || 65.7;
+      tc.textContent = fmt(t) + ' / ' + fmt(d);
+      prog.style.width = (t / d * 100).toFixed(2) + '%';
+      var idx = 0;
+      btns.forEach(function (b, i) { if (t >= +b.dataset.t) idx = i; });
+      btns.forEach(function (b, i) {
+        var start = +b.dataset.t, end = btns[i + 1] ? +btns[i + 1].dataset.t : d;
+        b.classList.toggle('on', i === idx);
+        b.querySelector('.fill').style.width = (i < idx ? 100 : i === idx ? (t - start) / (end - start) * 100 : 0).toFixed(1) + '%';
+      });
+      chapName.textContent = btns[idx].querySelector('strong').textContent;
+    });
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { v.currentTime = +b.dataset.t; userPaused = false; play(); });
+    });
+    toggle.addEventListener('click', function () { if (v.paused) { userPaused = false; play(); } else { userPaused = true; v.pause(); } });
+    document.getElementById('bigPlay').addEventListener('click', function () { userPaused = false; play(); });
+    v.addEventListener('click', function () { toggle.click(); });
+
+    // Autoplay (muted) while on screen, pause when scrolled away
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          inView = e.isIntersecting;
+          if (theater) return;
+          if (inView && !userPaused && !reduce) play();
+          else if (!inView) v.pause();
+        });
+      }, { threshold: 0.45 }).observe(screen);
+    }
+
+    // Ambient glow: sample the frame's average colour into the card background
+    var cv = document.createElement('canvas'); cv.width = 8; cv.height = 4;
+    var cx = cv.getContext('2d', { willReadFrequently: true });
+    setInterval(function () {
+      if (v.paused || v.readyState < 2) return;
+      try {
+        cx.drawImage(v, 0, 0, 8, 4);
+        var d = cx.getImageData(0, 0, 8, 4).data, r = 0, g = 0, b = 0;
+        for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+        var n = d.length / 4; r /= n; g /= n; b /= n;
+        var m = Math.max(r, g, b, 1), k = 230 / m;               // boost to a vivid tint
+        card.style.setProperty('--amb', Math.round(r * k) + ', ' + Math.round(g * k) + ', ' + Math.round(b * k));
+      } catch (err) {}
+    }, 500);
+
+    // Scroll-linked "power on": the screen scales up as it rises into view
+    if (!reduce) {
+      (function loop() {
+        if (!theater) {
+          var r = card.getBoundingClientRect(), vh = innerHeight;
+          var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.75)));
+          screen.style.transform = 'scale(' + (0.9 + 0.1 * p).toFixed(4) + ')';
+          screen.style.borderRadius = ((1 - p) * 18).toFixed(1) + 'px';
+        }
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    // Theater mode
+    function closeTheater() {
+      if (!theater) return;
+      var wasPlaying = !v.paused;
+      wrap.insertBefore(screen, chaptersEl);
+      theater.remove(); theater = null;
+      document.body.classList.remove('is-theater');
+      if (wasPlaying) play();
+      document.getElementById('vTheater').focus();
+    }
+    document.getElementById('vTheater').addEventListener('click', function () {
+      if (theater) { closeTheater(); return; }
+      var wasPlaying = !v.paused || !userPaused;
+      theater = document.createElement('div');
+      theater.className = 'theater-backdrop'; theater.setAttribute('role', 'dialog'); theater.setAttribute('aria-label', 'Argus: Firegrid demo');
+      theater.innerHTML = '<button class="vbtn close" type="button" aria-label="Close theater mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div class="stage"></div>';
+      theater.querySelector('.stage').appendChild(screen);
+      document.body.appendChild(theater);
+      document.body.classList.add('is-theater');
+      theater.addEventListener('click', function (e) { if (e.target === theater) closeTheater(); });
+      theater.querySelector('.close').addEventListener('click', closeTheater);
+      if (wasPlaying) { userPaused = false; play(); }
+      theater.querySelector('.close').focus();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTheater(); });
+    sync();
   })();
 </script>
 
